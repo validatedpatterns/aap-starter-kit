@@ -1,13 +1,11 @@
+---
 clusterGroup:
   name: hub
   isHubCluster: true
   namespaces:
-    - ansible-edge-gitops
     - vault
     - golang-external-secrets
     - ansible-automation-platform
-    - openshift-storage
-    - edge-gitops-vms
     - aap-config
   projects:
     - hub
@@ -16,9 +14,6 @@ clusterGroup:
       name: ansible-automation-platform-operator
       namespace: ansible-automation-platform
       channel: stable-2.6
-    openshift-data-foundation:
-      name: odf-operator
-      namespace: openshift-storage
   applications:
     aap:
       name: ansible-automation-platform
@@ -40,22 +35,6 @@ clusterGroup:
       project: hub
       chart: golang-external-secrets
       chartVersion: 0.1.*
-    odf:
-      name: odf
-      namespace: openshift-storage
-      project: hub
-      chart: openshift-data-foundations
-      chartVersion: 0.2.*
-      extraValueFiles:
-        - $patternref/overrides/values-odf-chart.yaml
-    ensure-openshift-console-plugins:
-      name: ensure-openshift-console-plugins
-      namespace: openshift-console
-      project: hub
-      chart: ensure-openshift-console-plugins
-      chartVersion: 0.1.*
-      extraValueFiles:
-        - '$patternref/overrides/values-console-plugins.yaml'
     vault:
       name: vault
       namespace: vault

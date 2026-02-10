@@ -1,7 +1,0 @@
----
-waitForMetalNode: false
-
-vms:
-  kiosk:
-    count: 2
-    role: kiosk

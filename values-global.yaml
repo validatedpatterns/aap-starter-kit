@@ -1,5 +1,5 @@
 global:
-  pattern: ansible-edge-gitops
+  pattern: aap-starter-kit
   secretLoader:
     disabled: false
   hub:
