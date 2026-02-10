@@ -1,3 +1,4 @@
+---
 global:
   pattern: aap-starter-kit
   secretLoader:
