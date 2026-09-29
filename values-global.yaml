@@ -9,6 +9,7 @@ global:
     installPlanApproval: Automatic
     syncPolicy: Automatic
     useCSV: false
+  singleArgoCD: true
 main:
   clusterGroupName: hub
   multiSourceConfig:
