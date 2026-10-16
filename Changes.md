@@ -10,8 +10,9 @@
   Orchestrator), and `complete-aap-ao` (hub, Lightspeed, and AO). Named
   `complete-aap-ao` rather than `complete-aap-with-ao` so the GitOps server DNS
   label stays within 63 characters.
-- AO variants use the `automation-orchestrator-instance` chart (kept at chart
-  version 0.1.0 for now), including ExternalSecret projection and an OpenShift
+- AO variants use the released `automation-orchestrator-instance` and
+  `vp-cloudnative-pg-cluster` charts from charts.validatedpatterns.io
+  (`chartVersion: 0.1.*`), including ExternalSecret projection and an OpenShift
   ConsoleLink.
 - Generate AO Postgres passwords with alphanumeric `postgresPasswordPolicy` so
   URL-encoded special characters do not break Alembic/configparser during AO

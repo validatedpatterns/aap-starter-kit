@@ -54,17 +54,15 @@ clusterGroup:
     vp-cloudnative-pg-cluster:
       name: vp-cloudnative-pg-cluster
       namespace: automation-orchestrator
-      repoURL: https://github.com/validatedpatterns/vp-cloudnative-pg-cluster-chart.git
-      chartVersion: main
-      path: "."
+      chart: vp-cloudnative-pg-cluster
+      chartVersion: 0.1.*
       extraValueFiles:
         - $patternref/overrides/values-vp-cloudnative-pg-ao.yaml
     automation-orchestrator:
       name: automation-orchestrator
       namespace: automation-orchestrator
-      repoURL: https://github.com/validatedpatterns/automation-orchestrator-instance-chart.git
-      chartVersion: main
-      path: "."
+      chart: automation-orchestrator-instance
+      chartVersion: 0.1.*
     vault:
       name: vault
       namespace: vault
