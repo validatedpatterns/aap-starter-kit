@@ -1,6 +1,6 @@
 ---
 clusterGroup:
-  name: hub
+  name: minimal-aap
   isHubCluster: true
   namespaces:
     vault:
@@ -25,6 +25,8 @@ clusterGroup:
       namespace: ansible-automation-platform
       chart: ansible-automation-platform-instance
       chartVersion: 0.1.*
+      extraValueFiles:
+        - $patternref/overrides/values-aap-instance-minimal.yaml
     aap-config:
       name: aap-config
       namespace: aap-config

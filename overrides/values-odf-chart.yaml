@@ -1,0 +1,7 @@
+---
+storageSystem:
+  inventory:
+    useSpecificNodes: false
+
+objectStorage:
+  enable: false

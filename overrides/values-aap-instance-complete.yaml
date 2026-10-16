@@ -1,0 +1,7 @@
+---
+# Full AAP instance: automation hub and Ansible Lightspeed enabled.
+# Hub requires the openshift-data-foundations chart in the same cluster.
+aap:
+  release: "2.7"
+  hub_disabled: false
+  lightspeed_disabled: false

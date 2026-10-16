@@ -1,6 +1,8 @@
 ---
 global:
   pattern: aap-starter-kit
+  singleArgoCD: true
+  vpNewFolderDir: true
   secretLoader:
     disabled: false
   hub:
@@ -11,7 +13,11 @@ global:
     useCSV: false
   singleArgoCD: true
 main:
-  clusterGroupName: hub
+  # Variants live under variants/<name>/values-<name>.yaml
+  # minimal-aap | aap-with-hub | aap-with-ao | complete-aap-ao
+  # Keep clusterGroup/variant names short: {name}-gitops-server-{pattern}-{name}
+  # must be <= 63 characters.
+  variant: minimal-aap
   multiSourceConfig:
     enabled: true
     clusterGroupChartVersion: 0.9.*

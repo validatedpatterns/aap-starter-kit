@@ -1,0 +1,7 @@
+---
+# AAP with automation hub. Requires the openshift-data-foundations chart
+# (and RWX storage classes it creates) in the same cluster.
+aap:
+  release: "2.7"
+  hub_disabled: false
+  lightspeed_disabled: true

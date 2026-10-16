@@ -1,0 +1,75 @@
+---
+# Overrides for vp-cloudnative-pg-cluster sized for Automation Orchestrator.
+# Matches the chart examples and automation-orchestrator-instance defaults:
+#   host orchestrator-postgres-rw.automation-orchestrator.svc
+#   secrets orchestrator-postgres-secret / temporal-postgres-secret
+#   CA secret orchestrator-postgres-ca
+#
+# Red Hat does not support CloudNativePG. Prefer an externally supported
+# PostgreSQL 15 instance when a supported database is required.
+
+secrets:
+  enabled: true
+  keyPrefix: secret/data/hub
+  additional:
+    - temporal-visibility-postgres-secret
+
+cluster:
+  # Align Cluster / Services / CA secret names with AO instance chart defaults.
+  fullnameOverride: orchestrator-postgres
+  type: postgresql
+  mode: standalone
+  version:
+    postgresql: "15"
+  databases:
+    - name: temporal
+      owner: temporal
+    - name: temporal_visibility
+      owner: temporal
+  cluster:
+    instances: 1
+    storage:
+      size: 5Gi
+    postgresql:
+      parameters:
+        max_connections: "200"
+    # Additional managed Services (passthrough to CNPG managed.services).
+    # Databases share the Cluster endpoint; one RW LoadBalancer covers
+    # orchestrator, temporal, and temporal_visibility.
+    # See https://cloudnative-pg.io/documentation/current/service_management/
+    services:
+      additional:
+        - selectorType: rw
+          serviceTemplate:
+            metadata:
+              name: orchestrator-postgres-lb
+              # Opt in to Validated Patterns External DNS (external-dns-operator chart).
+              # Default FQDN: <service-name>.<global.clusterDomain>
+              labels:
+                external-dns.validatedpatterns.io/publish: "yes"
+            spec:
+              type: LoadBalancer
+              ports:
+                - name: postgres
+                  port: 5432
+                  targetPort: 5432
+                  protocol: TCP
+    initdb:
+      database: orchestrator
+      owner: orchestrator
+      secret:
+        name: orchestrator-postgres-secret
+      postInitApplicationSQL:
+        # postInitApplicationSQL runs as postgres; create as orchestrator so
+        # AO migrations can COMMENT ON EXTENSION pgcrypto.
+        - SET ROLE orchestrator; CREATE EXTENSION IF NOT EXISTS pgcrypto; RESET ROLE;
+    roles:
+      - name: temporal
+        ensure: present
+        login: true
+        passwordSecret:
+          name: temporal-postgres-secret
+    annotations:
+      argocd.argoproj.io/sync-wave: "1"
+  backups:
+    enabled: false

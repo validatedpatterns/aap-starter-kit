@@ -1,0 +1,59 @@
+---
+clusterGroup:
+  name: aap-with-hub
+  isHubCluster: true
+  namespaces:
+    vault:
+    external-secrets-operator:
+      operatorGroup: true
+      targetNamespaces: []
+    external-secrets:
+    ansible-automation-platform:
+    aap-config:
+    openshift-storage:
+  subscriptions:
+    aap-operator:
+      name: ansible-automation-platform-operator
+      namespace: ansible-automation-platform
+      channel: stable-2.7
+    eso:
+      name: openshift-external-secrets-operator
+      namespace: external-secrets-operator
+      channel: stable-v1
+    openshift-data-foundation:
+      name: odf-operator
+      namespace: openshift-storage
+  applications:
+    aap:
+      name: ansible-automation-platform
+      namespace: ansible-automation-platform
+      chart: ansible-automation-platform-instance
+      chartVersion: 0.1.*
+      extraValueFiles:
+        - $patternref/overrides/values-aap-instance-with-hub.yaml
+    aap-config:
+      name: aap-config
+      namespace: aap-config
+      chart: aap-config
+      chartVersion: 0.2.*
+      extraValueFiles:
+        - $patternref/overrides/values-aap-config-aeg.yaml
+    odf:
+      name: odf
+      namespace: openshift-storage
+      chart: openshift-data-foundations
+      chartVersion: 0.3.*
+      extraValueFiles:
+        - $patternref/overrides/values-odf-chart.yaml
+    vault:
+      name: vault
+      namespace: vault
+      chart: hashicorp-vault
+      chartVersion: 0.1.*
+    openshift-external-secrets:
+      name: openshift-external-secrets
+      namespace: external-secrets
+      chart: openshift-external-secrets
+      chartVersion: 0.0.*
+  imperative: {}
+  managedClusterGroups: {}

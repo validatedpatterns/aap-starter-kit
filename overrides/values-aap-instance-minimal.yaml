@@ -1,0 +1,7 @@
+---
+# Minimal AAP instance: controller (+ EDA by chart default), no hub, no Lightspeed.
+# Pins the chart release field to match the AAP operator channel (stable-2.7).
+aap:
+  release: "2.7"
+  hub_disabled: true
+  lightspeed_disabled: true
